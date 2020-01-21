@@ -4,4 +4,6 @@
 *.ipynb_checkpoints
 
 # Large data files
+/data/raw/i2b2-2010/
 /data/raw/cui/
+/data/processed/
