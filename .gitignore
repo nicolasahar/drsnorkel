@@ -1,6 +1,7 @@
 # Extensions
 */__pycache__/
 *.pyc
+*.ipynb_checkpoints
 
 # Large data files
 /data/raw/cui/
