@@ -18,20 +18,8 @@ logging.basicConfig(level=20)
 class DrSnorkel():
 	"""
 	Main entry into DrSnorkel
-
-	Notes
-	-----
 	"""
 	def __init__(self) -> None:
-		pass
-
-	def label_with_metamap(self, sent):
-		"""
-		Direct access to metamap labelling function
-		"""
-		return metamap(sent)
-
-	def label_with_scispacy(self, model): # pass a scispacy model (e.g. en-core-sci-md)
 		pass
 
 	def process_i2b2_2010(self, root_data_dir: str, data_output_dir: str) -> None: 
@@ -46,8 +34,10 @@ class DrSnorkel():
 
 		applier = applier = PandasLFApplier(lfs=[metamap])
 
-		metamap_train = applier.apply(df=train_data)
-		metamap_test = applier.apply(df=test_data)
+		l_metamap_train = applier.apply(df=train_data.head(10))
+		l_metamap_test = applier.apply(df=test_data.head(10))
+
+		return l_metamap_train, l_metamap_test
 
 		
 if __name__ == "__main__":
@@ -58,6 +48,7 @@ if __name__ == "__main__":
 	parser.add_argument('--root_data_dir', type=str, default="./data", help='Relative path to root data dir')
 	parser.add_argument('--data_output_dir', type=str, default="./data/processed", help='Relative path to output data dir')
 	parser.add_argument('--i2b2_2010_file_name', type=str, default="process_i2b2_2010.csv", help='Name of the processed i2b2 2010 dataset created by the process_i2b2_2010 in the DrSnorkel class')
+	parser.add_argument('--cui_csv_file_name', type=str, default="./data/raw/cui/all_cuis_conso.csv", help='Name of the processed i2b2 2010 dataset created by the process_i2b2_2010 in the DrSnorkel class')
 	
 	args = parser.parse_args()
 	
@@ -71,7 +62,7 @@ if __name__ == "__main__":
 	i2b2_2010_dataset = pd.read_csv(dataset_path)
 
 	# Apply our metamap LF to the i2b2b 2010 dataset
-	dr_snorkel.apply_metamap(i2b2_2010_dataset)
+	l_metamap_train, l_metamap_test = dr_snorkel.apply_metamap(i2b2_2010_dataset)
 
 	import pdb; pdb.set_trace()
 

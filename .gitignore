@@ -1,3 +1,6 @@
-#Extensions
+# Extensions
 */__pycache__/
 *.pyc
+
+# Large data files
+/data/raw/cui/

@@ -61,5 +61,11 @@ def process_i2b2_2010(root_data_dir: str, output_dir: str) -> None:
     
     merged_df.to_csv(file_name, index=False)
 
+def get_cui_indices(cui_csv_file_name: str):
+    return pd.read_csv(cui_csv_file_name, encoding="Latin1").to_dict(orient="dict")
+
+
+
+
 
         
