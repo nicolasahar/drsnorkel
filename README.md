@@ -21,3 +21,4 @@ A package for programmatically building clinical training data via weak supervis
 - MM LF is too slow because we instantiate mm and get_cui_indices for every datapoint - find a way around this
 - Test that my hacked cui_indexer works
 - Analyze generated label distributions
+- Wipe i2b2-2010
