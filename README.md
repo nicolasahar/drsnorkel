@@ -48,7 +48,16 @@ A package for programmatically building clinical training data via weak supervis
 - get their viewer? A key aspect of labeling function development is that the pro- cess is iterative. After developing an initial set of labeling func- tions, it is important for users to visualize the errors of the end model. Therefore, when the model is evaluated on the devel- opment data set, the candidates are separated into true positive, false positive, true negative, and false negative sets. Each of these buckets can be loaded into a viewer in a notebook (Figure 10) so that SMEs can identify common patterns that are either not covered or misclassified by their current labeling functions. The viewer also supports labeling candidates directly in order to cre- ate or expand development and test sets.
 - what is this? automatically defining candidates using their named-entity recognition features.
 
-- approach: https://github.com/snorkel-team/snorkel/issues/1041
+# New: 
+- reprocess data to make more sense with preprocessing function! 
+- should we do by sents or docs? 
+- our major problem is we still assume only 1 CUI per sentence - but can have many CUIs per document!
+  - in our preprocessor - we can output new fields for each datapoint in a dict - we can thus assume a max of 10-20 CUIs per datapoint, and create these as fields (we will have to see what max CUI / datapoint is over the dataset!)
+
+# Training: 
+-what do we want to train in - allennlp or their own MTL framework - for our discriminative model? 
+
+- ideal approach: https://github.com/snorkel-team/snorkel/issues/1041
   - 1) Create n binary classifier "LF wrappers" for each CUI - use LF generators - see paper p4
   - 2) Preprocess text with true labelling function (e.g. MetaMap, Scispacy) in a preprocessing step 
   - 3) Preprocesser feeds 1 to CUIn LF if CUIn is present in text, else 0.

@@ -8,6 +8,7 @@ from pandas import DataFrame
 
 from snorkel.labeling import PandasLFApplier
 
+from drsnorkel.labelling.preprocessing import MetaMapPreprocessor
 from drsnorkel.labelling.labelling_functions import metamap
 from drsnorkel.utils.data_utils import process_i2b2_2010
 
@@ -24,6 +25,7 @@ class DrSnorkel():
 
 	def process_i2b2_2010(self, root_data_dir: str, data_output_dir: str) -> None: 
 		process_i2b2_2010(root_data_dir, data_output_dir)
+
 
 	def apply_metamap(self, dataset: DataFrame): 
 		"""
@@ -49,12 +51,14 @@ if __name__ == "__main__":
 	parser.add_argument('--data_output_dir', type=str, default="./data/processed", help='Relative path to output data dir')
 	parser.add_argument('--i2b2_2010_file_name', type=str, default="process_i2b2_2010.csv", help='Name of the processed i2b2 2010 dataset created by the process_i2b2_2010 in the DrSnorkel class')
 	parser.add_argument('--cui_csv_file_name', type=str, default="./data/raw/cui/all_cuis_conso.csv", help='Name of the processed i2b2 2010 dataset created by the process_i2b2_2010 in the DrSnorkel class')
+	parser.add_argument('--apply_metamap', action="store_true", help="Set flag to apply the `metamap` to the train/test dataset")
 	
 	args = parser.parse_args()
 	
 	dr_snorkel = DrSnorkel()
 
-	if args.process_i2b2_2010: # Process i2b2-2010 if not already done
+	# Process i2b2-2010 if not already done
+	if args.process_i2b2_2010: 
 		dr_snorkel.process_i2b2_2010(args.root_data_dir, args.data_output_dir)
 
 	# Load the i2b2b 2010 dataset
@@ -62,7 +66,8 @@ if __name__ == "__main__":
 	i2b2_2010_dataset = pd.read_csv(dataset_path)
 
 	# Apply our metamap LF to the i2b2b 2010 dataset
-	l_metamap_train, l_metamap_test = dr_snorkel.apply_metamap(i2b2_2010_dataset)
+	if args.apply_metamap: 	
+		l_metamap_train, l_metamap_test = dr_snorkel.apply_metamap(i2b2_2010_dataset)
 
 	import pdb; pdb.set_trace()
 

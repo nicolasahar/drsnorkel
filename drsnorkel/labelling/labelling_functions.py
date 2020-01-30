@@ -10,7 +10,7 @@ from drsnorkel.utils.data_utils import get_cui_indices
 
 
 @labeling_function()
-def metamap(sent):
+def metamap(sent, metamap=None):
 	"""
 	Notes
 	-----
